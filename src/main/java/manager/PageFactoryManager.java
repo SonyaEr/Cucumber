@@ -1,10 +1,7 @@
 package manager;
 
 import org.openqa.selenium.WebDriver;
-import pages.Cart;
-import pages.HomePage;
-import pages.ProductPage;
-import pages.SignInPage;
+import pages.*;
 
 public class PageFactoryManager {
 
@@ -22,12 +19,16 @@ public class PageFactoryManager {
         return new SignInPage(driver);
     }
 
+    public SearchResultsPage getSearchResultsPage() {
+        return new SearchResultsPage(driver);
+    }
+
     public HomePage getHomePage() {
         return new HomePage(driver);
     }
 
-    public Cart getCart() {
-        return new Cart(driver);
+    public CartPage getCartPage() {
+        return new CartPage(driver);
     }
 
 }
