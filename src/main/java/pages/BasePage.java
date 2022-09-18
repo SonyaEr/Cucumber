@@ -42,19 +42,20 @@ public class BasePage {
                 webDriver -> ((JavascriptExecutor) webDriver).executeScript("return window.jQuery != undefined && jQuery.active == 0;"));
     }
 
-    public void waitForVisibilityOfElement(long time, WebElement element) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
+    public void waitForVisibilityOfElement(long sec, WebElement element) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(sec));
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
-    public void waitForPresenceOfElementLocated(long time, By locator) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
+    public void waitForPresenceOfElementLocated(long sec, By locator) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(sec));
         wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
-    public void waitForElementToBeClickable(long time, By locator) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
-        wait.until(ExpectedConditions.elementToBeClickable(locator));
+    public void waitForElementToBeClickable(long sec, WebElement element) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(sec));
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+
     }
 
     public void actionsMoveToElement(WebElement element) {
