@@ -18,6 +18,9 @@ public class CartPage extends BasePage {
     @FindBy(xpath = "//div[@id='nav-flyout-ewc']//span/span")
     private WebElement priceNavFlyout;
 
+    @FindBy(xpath = "//span[@id='sw-gtc']//a")
+    private WebElement goToCartButton;
+
     public CartPage(WebDriver driver) {
         super(driver);
     }
@@ -40,11 +43,13 @@ public class CartPage extends BasePage {
         proceedToCheckoutButton.isDisplayed();
     }
 
-    public void isPriceCountVisibility() {
+    public void isPriceCartVisibility() {
         priceCart.isDisplayed();
     }
 
     public void isPriceNavFlyoutVisibility() {
         priceNavFlyout.isDisplayed();
     }
+
+    public void clickOnGoToCartButton() {goToCartButton.click();}
 }

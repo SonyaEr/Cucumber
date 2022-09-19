@@ -3,14 +3,10 @@ import io.cucumber.java.Before;
 
 public class Hooks {
 
-    @Before("@First")
+    @Before("@NegativeTestCase")
     public void beforeFirst(){
-        System.out.println("This will run only before the First Scenario");
+        System.out.println("Negative test case:");
     }
 
-    @After("@First")
-    public void afterFirst(){
-        System.out.println("This will run only after the First Scenario");
-    }
 
 }

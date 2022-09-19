@@ -34,12 +34,19 @@ public class Header extends BasePage {
     @FindBy(xpath = "//span[@id='nav-cart-count']")
     private WebElement countCart;
 
+    @FindBy(xpath = "//a[@id='nav-orders']")
+    private WebElement ordersButton;
+
+    @FindBy(xpath = "//a[@id='nav-bb-logo'] ")
+    private WebElement backUpLogo;
 
     public Header(WebDriver driver) {
         super(driver);
     }
+    public void clickOnBackUpLogo() {backUpLogo.click();}
 
     public void searchByKeyword(final String keyword) {
+        searchField.clear();
         searchField.sendKeys(keyword);
         searchButton.click();
     }
@@ -51,11 +58,12 @@ public class Header extends BasePage {
 
     public void clickOnNavSearchListButton() {navSearchListButton.click();}
 
+    public void clickOnOrdersButton() {ordersButton.click();}
+
     public void clickOnSearchButton() {searchButton.click();}
 
     public boolean isSearchOptionsVisible() {
-        if (searchOptions.isEmpty()) return false;
-        return true;
+        return !searchOptions.isEmpty();
     }
 
     public WebElement getOption(final String searchText) {

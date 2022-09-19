@@ -18,16 +18,6 @@ public class BasePage {
 
     public Header getHeaderPage() {return new Header(driver);}
 
-    private By locator;
-
-    public By getLocator(int id) {
-        return locator;
-    }
-
-    public By getLocator(int id, int param) {
-        return locator;
-    }
-
     public BasePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);

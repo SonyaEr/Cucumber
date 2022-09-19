@@ -31,6 +31,14 @@ public class PageFactoryManager {
         return new CartPage(driver);
     }
 
+    public ShoppingCartPage getShoppingCartPage() {
+        return new ShoppingCartPage(driver);
+    }
+
+    public CheckoutPage getCheckoutPage() {
+        return new CheckoutPage(driver);
+    }
+
 }
 
 
