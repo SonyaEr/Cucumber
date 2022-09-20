@@ -39,6 +39,8 @@ public class PageFactoryManager {
         return new CheckoutPage(driver);
     }
 
+    public PreferencesPage getPreferencesPage(){ return new PreferencesPage(driver);}
+
 }
 
 

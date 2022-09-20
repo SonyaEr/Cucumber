@@ -11,7 +11,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pages.*;
 
-
 import java.util.List;
 
 import static io.github.bonigarcia.wdm.WebDriverManager.chromedriver;
@@ -21,6 +20,7 @@ public class StepDefinitions {
 
     private static final long DEFAULT_TIMEOUT = 60;
     private double priceProduct = 0;
+    private String currency = null;
 
     WebDriver driver;
     HomePage homePage;
@@ -30,6 +30,7 @@ public class StepDefinitions {
     ProductPage productPage;
     ShoppingCartPage shoppingCartPage;
     CheckoutPage checkoutPage;
+    PreferencesPage preferencesPage;
 
     PageFactoryManager pageFactoryManager;
 
@@ -108,13 +109,10 @@ public class StepDefinitions {
         homePage.getHeaderPage().clickOnNavSearchListButton();
     }
 
-    @And("I check search options on header")
-    public void checkSearchOptionsOnHeader() {
-        homePage.getHeaderPage().isSearchOptionsVisible();
-    }
 
     @And("I click search option by keyword {string}")
     public void clickSearchOptionNameOption(final String keyword) {
+        homePage.waitForVisibilityOfElement(15, homePage.getHeaderPage().getSearchOption());
         homePage.getHeaderPage().getOption(keyword).click();
     }
 
@@ -139,14 +137,10 @@ public class StepDefinitions {
 
     @When("I make search by keyword {string}")
     public void fillInSearchFieldByKeywordKeyword(final String keyword) {
-        homePage.getHeaderPage().searchByKeyword(keyword);
-    }
-
-    @And("I check search field visibility on header")
-    public void checkSearchFieldVisibilityOnHeader() {
         searchResultsPage = pageFactoryManager.getSearchResultsPage();
         searchResultsPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         searchResultsPage.getHeaderPage().isSearchFieldVisibility();
+        homePage.getHeaderPage().searchByKeyword(keyword);
     }
 
     @Then("I compare current search input with {string} on header")
@@ -222,15 +216,26 @@ public class StepDefinitions {
     public void savePriceProduct() {
         productPage = pageFactoryManager.getProductPage();
         productPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
-        productPage.waitForElementToBeClickable(5, productPage.getPriceInCartSection());
-        priceProduct = Double.parseDouble(productPage.getPriceInCartSection().getText().substring(1));
+        boolean flag = false;
+        while (!flag) {
+            try {
+                productPage.waitForElementToBeClickable(2, productPage.getPriceInCartSection());
+                priceProduct = Double.parseDouble(productPage.getPriceInCartSection().getText().substring(1));
+                flag = true;
+            } catch (Exception ignore) {
+                productPage.waitForElementToBeClickable(2, productPage.getPriceInCartSectionSponsored());
+                priceProduct = Double.parseDouble(productPage.getPriceInCartSectionSponsored().getText().substring(1));
+
+                flag = true;
+            }
+        }
     }
 
     @And("I compare 'price cart' with 'price product'")
     public void comparePriceCartWithPriceProduct() {
         String text = cartPage.getPriceCart();
         double price = Double.parseDouble(text.split(" ")[1]);
-        assertEquals(price, priceProduct, 0.0);
+        assertEquals(price, priceProduct, 0.00);
     }
 
     @Then("I check error or warning visibility on sign in page")
@@ -293,6 +298,7 @@ public class StepDefinitions {
     public void clickPriceCategory() {
         searchResultsPage = pageFactoryManager.getSearchResultsPage();
         searchResultsPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        searchResultsPage.waitForVisibilityOfElement(50, searchResultsPage.getProductCurrency());
         searchResultsPage.clickOnFirstPrice();
     }
 
@@ -327,9 +333,55 @@ public class StepDefinitions {
     }
 
     @Then("I checks that product page contains {string}")
-    public void iChecksThatProductPageContainsCustomerReviews( final String name) {
+    public void checksThatProductPageContainsCustomerReviews( final String name) {
         productPage = pageFactoryManager.getProductPage();
         productPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         assertEquals(productPage.getReviewsTitle(), name);
+    }
+
+    @When("I click link section by keyword {string}")
+    public void clickLinkSectionByKeywordName(final String name) {
+        homePage.clickOnLinkMoreProduct(name);
+    }
+
+    @And("I save 'currency'")
+    public void saveCurrency() {
+        searchResultsPage = pageFactoryManager.getSearchResultsPage();
+        searchResultsPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        currency = searchResultsPage.getPriceCurrency();
+    }
+
+    @And("I click 'Customer Preferences' button")
+    public void clickCustomerPreferencesButton() {
+        searchResultsPage.actionsMoveToElement(searchResultsPage.getHeaderPage().getCustomerPreferencesButton());
+    }
+
+    @And("I click 'Currency change' button on header")
+    public void clickCurrencyChangeButtonOnHeader() {
+        searchResultsPage.waitForVisibilityOfElement(10,searchResultsPage.getHeaderPage().getChangeCurrencyButtonBefore());
+        searchResultsPage.getHeaderPage().clickOnChangeCurrencyButton();
+    }
+
+    @And("I select currency by keyword {string}")
+    public void selectCurrencyByKeywordCurrency(final String currency) {
+        preferencesPage = pageFactoryManager.getPreferencesPage();
+        preferencesPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        preferencesPage.clickOnCurrencyMenuButton();
+        preferencesPage.waitForVisibilityOfElement(15, preferencesPage.getCurrencyOption());
+        preferencesPage.getCurrencyOption(currency);
+    }
+
+    @And("I click 'Save changes' button on preferences page")
+    public void clickSaveChangesButtonOnPreferencesPage() {
+        preferencesPage.clickOnSave();
+    }
+
+    @Then("I compare 'currency' with current 'currency'")
+    public void compareCurrencyWithCurrentCurrency() {
+        searchResultsPage = pageFactoryManager.getSearchResultsPage();
+        searchResultsPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        searchResultsPage.waitForVisibilityOfElement(15, searchResultsPage.getProductCurrency());
+        String currencyNew = searchResultsPage.getPriceCurrency();
+        assertEquals(currency, currencyNew);
     }
 }

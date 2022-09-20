@@ -39,6 +39,8 @@ public class CartPage extends BasePage {
         return  priceNavFlyout.getText();
     }
 
+    public void clickOnGoToCartButton() {goToCartButton.click();}
+
     public void isProceedToCheckoutVisibility() {
         proceedToCheckoutButton.isDisplayed();
     }
@@ -51,5 +53,4 @@ public class CartPage extends BasePage {
         priceNavFlyout.isDisplayed();
     }
 
-    public void clickOnGoToCartButton() {goToCartButton.click();}
 }

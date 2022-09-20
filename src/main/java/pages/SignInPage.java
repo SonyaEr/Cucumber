@@ -29,8 +29,16 @@ public class SignInPage extends BasePage {
         super(driver);
     }
 
-    public void isSignInFieldVisible() {signInField.isDisplayed();
-    }
+    public WebElement getErrorSection() {return errorSection;}
+
+    public WebElement getWarningSection() {return warningSection;}
+
+    public void clickContinueButton() {continueButton.click();}
+
+    public void clickSignInSubmitButton() {signInSubmitButton.click();}
+
+    public void isSignInFieldVisible() {signInField.isDisplayed(); }
+
     public void isPasswordFieldVisible() {passwordField.isDisplayed();}
 
     public void enterTextToSignUpField(final String emailOrPhoneText) {
@@ -53,12 +61,5 @@ public class SignInPage extends BasePage {
         passwordField.sendKeys(Keys.ENTER);
     }
 
-    public void clickContinueButton() {continueButton.click();}
-
-    public void clickSignInSubmitButton() {signInSubmitButton.click();}
-
-    public WebElement getErrorSection() {return errorSection;}
-
-    public WebElement getWarningSection() {return warningSection;}
 
 }

@@ -7,7 +7,6 @@ Feature: Smoke
 
   Scenario Outline: Check search list
     When I click 'Nav Search List' button
-    And I check search options on header
     And I click search option by keyword '<keyword>'
     And I click 'Search' button
     Then I compare current search option with '<keyword>' on header
@@ -18,7 +17,6 @@ Feature: Smoke
       | Computers |
 
   Scenario Outline: Check search
-    And I check search field visibility on header
     When I make search by keyword '<keyword>'
     Then I compare current search input with '<keyword>' on header
     And I check that url contains '<keyword>'
@@ -28,7 +26,6 @@ Feature: Smoke
       | Computers |
 
   Scenario Outline: Check add product to cart with price
-    And I check search field visibility on header
     When I make search by keyword '<keyword>'
     And I check image of product visibility
     And I click image on product with price
@@ -43,12 +40,12 @@ Feature: Smoke
     And I check 'price nav flyout' visibility
     And I compare 'price cart' with 'price nav flyout'
 
+
     Examples:
       | keyword     | title         |
       | playstation | Added to Cart |
 
   Scenario Outline: Check add to checkout page
-    And I check search field visibility on header
     When I make search by keyword '<keyword>'
     And I check image of product visibility
     And I click image on product with price
@@ -82,9 +79,8 @@ Feature: Smoke
       | keyword     | lowPrice  | highPrice   |
       | Video Games | 5         | 10          |
 
-  Scenario Outline: Check changing price
+  Scenario Outline: Check reviews
     When I click 'Nav Search List' button
-    And I check search options on header
     And I click search option by keyword '<keyword>'
     And I click 'Search' button
     And I click 'Reviews' button by '<name>'
@@ -92,6 +88,20 @@ Feature: Smoke
 
     Examples:
       | keyword     | name   |
-    # | Video Games | PS5
+    # | Video Games | PS5 |
       |Pet Supplies |Meow |
+
+  Scenario Outline: Check changing currency
+    When I click link section by keyword '<name>'
+    And I save 'currency'
+    And I click 'Customer Preferences' button
+    And I click 'Currency change' button on header
+    And I select currency by keyword '<currency>'
+    And I click 'Save changes' button on preferences page
+    Then  I compare 'currency' with current 'currency'
+
+    Examples:
+      | name     | currency   |
+      | Dress     | EUR       |
+
 

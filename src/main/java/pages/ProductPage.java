@@ -12,6 +12,9 @@ public class ProductPage extends BasePage {
     @FindBy(xpath = "//span[@id='priceblock_ourprice']")
     private WebElement priceInCartSection;
 
+    @FindBy(xpath = "//span[@id='priceblock_saleprice']")
+    private WebElement priceInCartSectionSponsored;
+
     @FindBy(xpath = "//div[@id='reviewsMedley']//h2")
     private WebElement reviewsTitle;
 
@@ -19,12 +22,12 @@ public class ProductPage extends BasePage {
         super(driver);
     }
 
-    public void clickOnAddToCartButton() {addToCartListButton.click();}
-
     public WebElement getPriceInCartSection() {return priceInCartSection;}
+
+    public WebElement getPriceInCartSectionSponsored() {return priceInCartSectionSponsored;}
 
     public String getReviewsTitle() { return reviewsTitle.getText();}
 
-
+    public void clickOnAddToCartButton() {addToCartListButton.click();}
 
 }

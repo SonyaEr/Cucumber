@@ -19,6 +19,9 @@ public class Header extends BasePage {
     @FindBy(xpath = "//div[@id='nav-search-dropdown-card']//option")
     private List<WebElement> searchOptions;
 
+    @FindBy(xpath = "(//div[@id='nav-search-dropdown-card']//option)[1]")
+    private WebElement searchOptionsFirst;
+
     @FindBy(xpath = "//div[@id='nav-search-dropdown-card']//option[@selected='selected']")
     private WebElement searchSelectedOptions;
 
@@ -40,9 +43,19 @@ public class Header extends BasePage {
     @FindBy(xpath = "//a[@id='nav-bb-logo'] ")
     private WebElement backUpLogo;
 
+    @FindBy(xpath = "//a[@id='icp-nav-flyout']")
+    private WebElement customerPreferencesButton;
+
+    @FindBy(xpath = "//a[@class='icp-flyout-change']")
+    private List<WebElement> changeCurrencyButton;
+
+    @FindBy(xpath = "//a[@class='icp-flyout-change']/parent::span")
+    private WebElement changeCurrencyButtonBefore;
+
     public Header(WebDriver driver) {
         super(driver);
     }
+
     public void clickOnBackUpLogo() {backUpLogo.click();}
 
     public void searchByKeyword(final String keyword) {
@@ -52,18 +65,24 @@ public class Header extends BasePage {
     }
     public WebElement getSignInButton() { return signInButton;}
 
+    public WebElement getCustomerPreferencesButton() {
+        return  customerPreferencesButton;
+    }
+
+    public WebElement getSelectedOption() { return searchSelectedOptions;}
+
+    public WebElement getSearchField() { return searchField;}
+
+    public WebElement  getChangeCurrencyButtonBefore() { return changeCurrencyButtonBefore;}
+
+    public WebElement getSearchOption() {  return searchOptionsFirst;}
+
     public String getUserTitleItem() {
         return  userTitle.getText();
     }
 
-    public void clickOnNavSearchListButton() {navSearchListButton.click();}
-
-    public void clickOnOrdersButton() {ordersButton.click();}
-
-    public void clickOnSearchButton() {searchButton.click();}
-
-    public boolean isSearchOptionsVisible() {
-        return !searchOptions.isEmpty();
+    public String getCountCart() {
+        return  countCart.getText();
     }
 
     public WebElement getOption(final String searchText) {
@@ -74,21 +93,21 @@ public class Header extends BasePage {
         }
         throw new IllegalArgumentException();
     }
-    public WebElement getSelectedOption() { return searchSelectedOptions;}
+
+    public void clickOnChangeCurrencyButton() {changeCurrencyButton.get(0).click();}
+
+    public void clickOnNavSearchListButton() {navSearchListButton.click();}
+
+    public void clickOnOrdersButton() {ordersButton.click();}
+
+    public void clickOnSearchButton() {searchButton.click();}
 
     public void isSearchFieldVisibility() {
         searchField.isDisplayed();
     }
 
-    public WebElement getSearchField() { return searchField;}
-
-    public String getCountCart() {
-        return  countCart.getText();
-    }
-
     public void isCountCartVisibility() {
         countCart.isDisplayed();
     }
-
 
 }
