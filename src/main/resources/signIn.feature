@@ -16,8 +16,8 @@ Feature: Sign In
     Then I check that user title contains '<name>'
 
     Examples:
-      | email                      | password        | name  |
-      | yeroshenko.sofia@gmail.com | Ye*JL)rwF!hN3Be | Sofia |
+      | email          | password | name  |
+      | user@gmail.com | Ye*JL)rw | Sofia |
 
   @NegativeTestCase
   Scenario Outline: Check email error in sign in
