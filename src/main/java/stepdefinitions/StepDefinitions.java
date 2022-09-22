@@ -1,7 +1,7 @@
 package stepdefinitions;
 
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
+import io.cucumber.java.*;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -12,6 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import pages.*;
 
 import java.util.List;
+import java.util.Set;
 
 import static io.github.bonigarcia.wdm.WebDriverManager.chromedriver;
 import static org.junit.Assert.*;
@@ -22,8 +23,8 @@ public class StepDefinitions {
     private double priceProduct = 0;
     private String currency = null;
 
-    WebDriver driver;
-    HomePage homePage;
+     WebDriver driver;
+     HomePage homePage;
     SearchResultsPage searchResultsPage;
     CartPage cartPage;
     SignInPage signInPage;
@@ -35,20 +36,21 @@ public class StepDefinitions {
     PageFactoryManager pageFactoryManager;
 
     @Before
-    public void testsSetUp() {
+    public void setUp() {
         chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         pageFactoryManager = new PageFactoryManager(driver);
-    }
 
+    }
 
     @After
     public void tearDown() {
         driver.close();
     }
 
-    @And("I open {string} page")
+
+    @When("I open {string} page")
     public void openPage(final String url) {
         homePage = pageFactoryManager.getHomePage();
         homePage.openHomePage(url);
@@ -286,7 +288,8 @@ public class StepDefinitions {
     public void checkThatCheckoutPageContainsTitle(final String title) {
         checkoutPage = pageFactoryManager.getCheckoutPage();
         checkoutPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
-        assertEquals(checkoutPage.getTitle(), title);
+        checkoutPage.waitForVisibilityOfElement(5,checkoutPage.getTitle());
+        assertEquals(checkoutPage.getTitleText(), title);
     }
 
     @When("I click category by keyword {string}")
@@ -384,4 +387,5 @@ public class StepDefinitions {
         String currencyNew = searchResultsPage.getPriceCurrency();
         assertEquals(currency, currencyNew);
     }
+
 }

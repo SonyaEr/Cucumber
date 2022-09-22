@@ -33,6 +33,10 @@ public class SignInPage extends BasePage {
 
     public WebElement getWarningSection() {return warningSection;}
 
+    public WebElement getSignInField(){ return signInField;}
+
+    public WebElement getPasswordField(){ return passwordField;}
+
     public void clickContinueButton() {continueButton.click();}
 
     public void clickSignInSubmitButton() {signInSubmitButton.click();}

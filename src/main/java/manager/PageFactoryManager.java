@@ -1,6 +1,7 @@
 package manager;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
 import pages.*;
 
 public class PageFactoryManager {
@@ -26,6 +27,7 @@ public class PageFactoryManager {
     public HomePage getHomePage() {
         return new HomePage(driver);
     }
+
 
     public CartPage getCartPage() {
         return new CartPage(driver);

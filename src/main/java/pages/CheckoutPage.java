@@ -13,5 +13,7 @@ public class CheckoutPage extends BasePage {
         super(driver);
     }
 
-    public String getTitle() {return title.getText();}
+    public String getTitleText() {return title.getText();}
+
+    public WebElement getTitle() {return title;}
 }
